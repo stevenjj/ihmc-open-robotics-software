@@ -100,6 +100,44 @@ public abstract class FootstepPlannerOnRoughTerrainTest implements PlanningTest
 
    @ContinuousIntegrationTest(estimatedDuration = 0.6)
    @Test(timeout = 30000)
+   public void testDownCorridor()
+   {
+      boolean assertPlannerReturnedResult = assertPlannerReturnedResult();
+      double corridorStartDistance = 0.5;
+      double corridorWidth = 0.4;
+      double corridorLength = 2.0;
+      double blockWidth = 2.0;
+      PlanarRegionsListGenerator generator = new PlanarRegionsListGenerator();
+      generator.translate(5.0, 0.0, 0.0);
+      generator.addRectangle(20.0, 2.0 * blockWidth + corridorWidth);
+      generator.identity();
+      generator.translate(corridorStartDistance + corridorLength / 2.0, (blockWidth + corridorWidth) / 2.0, 0.0);
+      generator.addCubeReferencedAtBottomMiddle(corridorLength, blockWidth, 3.0);
+      generator.translate(0.0, -blockWidth - corridorWidth, 0.0);
+      generator.addCubeReferencedAtBottomMiddle(corridorLength, blockWidth, 3.0);
+      PlanarRegionsList regions = generator.getPlanarRegionsList();
+
+      // define start and goal conditions
+      FramePose3D initialStanceFootPose = new FramePose3D(worldFrame);
+      RobotSide initialStanceSide = RobotSide.LEFT;
+      initialStanceFootPose.setY(initialStanceSide.negateIfRightSide(getParameters().getIdealFootstepWidth() / 2.0));
+      initialStanceFootPose.setX(-2.0);
+
+      FramePose3D goalPose = new FramePose3D(worldFrame);
+      goalPose.setPosition(corridorStartDistance + corridorLength + 1.0, 0.0, 0.0);
+
+      // run the test
+      FootstepPlanner planner = getPlanner();
+      FootstepPlan footstepPlan = PlanningTestTools.runPlanner(planner, initialStanceFootPose, initialStanceSide, goalPose, regions, assertPlannerReturnedResult);
+      if (visualize())
+         PlanningTestTools.visualizeAndSleep(regions, footstepPlan, goalPose);
+
+      if(assertPlannerReturnedResult)
+         assertTrue(PlanningTestTools.isGoalNextToLastStep(goalPose, footstepPlan));
+   }
+
+   @ContinuousIntegrationTest(estimatedDuration = 0.6)
+   @Test(timeout = 30000)
    public void testOverCinderBlockField()
    {
       boolean assertPlannerReturnedResult = assertPlannerReturnedResult();
