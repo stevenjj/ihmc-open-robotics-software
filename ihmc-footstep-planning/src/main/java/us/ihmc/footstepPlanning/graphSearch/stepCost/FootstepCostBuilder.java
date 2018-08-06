@@ -44,6 +44,7 @@ public class FootstepCostBuilder
       includeHeightCost.setDefaultValue(false);
       useQuadraticHeightCost.setDefaultValue(false);
       useQuadraticStepCost.setDefaultValue(false);
+      usePitchAndRollCost.setDefaultValue(false);
 
       CompositeFootstepCost compositeFootstepCost = new CompositeFootstepCost();
 
@@ -58,7 +59,7 @@ public class FootstepCostBuilder
       if (usePitchAndRollCost.get())
          compositeFootstepCost.addFootstepCost(new PitchAndRollBasedCost());
 
-      if (useQuadraticHeightCost.get())
+      if (useQuadraticStepCost.get())
       {
          compositeFootstepCost.addFootstepCost(new QuadraticDistanceAndYawCost(footstepPlannerParameters.get()));
          compositeFootstepCost.addFootstepCost(new PerStepCost(footstepPlannerParameters.get()));
