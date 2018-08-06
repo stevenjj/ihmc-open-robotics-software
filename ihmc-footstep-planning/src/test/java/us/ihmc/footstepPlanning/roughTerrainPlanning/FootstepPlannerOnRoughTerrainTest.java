@@ -105,16 +105,17 @@ public abstract class FootstepPlannerOnRoughTerrainTest implements PlanningTest
       boolean assertPlannerReturnedResult = assertPlannerReturnedResult();
       double corridorStartDistance = 0.5;
       double corridorWidth = 0.4;
-      double corridorLength = 2.0;
+      double corridorHeight = 2.0;
+      double corridorLength = 0.25;
       double blockWidth = 2.0;
       PlanarRegionsListGenerator generator = new PlanarRegionsListGenerator();
       generator.translate(5.0, 0.0, 0.0);
       generator.addRectangle(20.0, 2.0 * blockWidth + corridorWidth);
       generator.identity();
       generator.translate(corridorStartDistance + corridorLength / 2.0, (blockWidth + corridorWidth) / 2.0, 0.0);
-      generator.addCubeReferencedAtBottomMiddle(corridorLength, blockWidth, 3.0);
+      generator.addCubeReferencedAtBottomMiddle(corridorLength, blockWidth, corridorHeight);
       generator.translate(0.0, -blockWidth - corridorWidth, 0.0);
-      generator.addCubeReferencedAtBottomMiddle(corridorLength, blockWidth, 3.0);
+      generator.addCubeReferencedAtBottomMiddle(corridorLength, blockWidth, corridorHeight);
       PlanarRegionsList regions = generator.getPlanarRegionsList();
 
       // define start and goal conditions
