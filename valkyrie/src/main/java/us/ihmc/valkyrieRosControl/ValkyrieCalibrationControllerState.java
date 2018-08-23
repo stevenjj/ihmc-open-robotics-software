@@ -50,10 +50,8 @@ public class ValkyrieCalibrationControllerState extends HighLevelControllerState
                                              JointDesiredOutputListReadOnly highLevelControlOutput,
                                              ValkyrieCalibrationParameters calibrationParameters, TorqueOffsetPrinter torqueOffsetPrinter)
    {
-      super(controllerState, highLevelControllerParameters, highLevelControllerToolbox);
+      super(controllerState, highLevelControllerParameters, ScrewTools.filterJoints(highLevelControllerToolbox.getControlledJoints(), OneDoFJoint.class));
       this.highLevelControlOutput = highLevelControlOutput;
-
-      OneDoFJoint[] controlledJoints = ScrewTools.filterJoints(highLevelControllerToolbox.getControlledJoints(), OneDoFJoint.class);
 
       for (OneDoFJoint controlledJoint : controlledJoints)
       {

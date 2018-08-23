@@ -4,6 +4,8 @@ import us.ihmc.commonWalkingControlModules.highLevelHumanoidControl.HighLevelCon
 import us.ihmc.commonWalkingControlModules.highLevelHumanoidControl.highLevelStates.HighLevelControllerState;
 import us.ihmc.commonWalkingControlModules.highLevelHumanoidControl.highLevelStates.DoNothingControllerState;
 import us.ihmc.humanoidRobotics.communication.packets.dataobjects.HighLevelControllerName;
+import us.ihmc.robotics.screwTheory.OneDoFJoint;
+import us.ihmc.robotics.screwTheory.ScrewTools;
 
 public class DoNothingControllerStateFactory implements HighLevelControllerStateFactory
 {
@@ -13,8 +15,10 @@ public class DoNothingControllerStateFactory implements HighLevelControllerState
    public HighLevelControllerState getOrCreateControllerState(HighLevelControllerFactoryHelper controllerFactoryHelper)
    {
       if (doNothingControllerState == null)
-         doNothingControllerState = new DoNothingControllerState(controllerFactoryHelper.getHighLevelHumanoidControllerToolbox(),
+      {
+         doNothingControllerState = new DoNothingControllerState(controllerFactoryHelper.getHighLevelHumanoidControllerToolbox().getControlledOneDoFJoints(),
                                                                  controllerFactoryHelper.getHighLevelControllerParameters());
+      }
 
       return doNothingControllerState;
    }

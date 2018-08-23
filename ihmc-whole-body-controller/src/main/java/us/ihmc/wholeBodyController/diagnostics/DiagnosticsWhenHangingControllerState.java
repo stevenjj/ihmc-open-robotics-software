@@ -114,7 +114,7 @@ public class DiagnosticsWhenHangingControllerState extends HighLevelControllerSt
                                                 HighLevelHumanoidControllerToolbox controllerToolbox,
                                                 HighLevelControllerParameters highLevelControllerParameters, TorqueOffsetPrinter torqueOffsetPrinter)
    {
-      super(controllerState, highLevelControllerParameters, controllerToolbox);
+      super(controllerState, highLevelControllerParameters, controllerToolbox.getControlledOneDoFJoints());
 
       this.humanoidJointPoseList = humanoidJointPoseList;
       bipedSupportPolygons = controllerToolbox.getBipedSupportPolygons();
@@ -142,8 +142,7 @@ public class DiagnosticsWhenHangingControllerState extends HighLevelControllerSt
       fullRobotModel = controllerToolbox.getFullRobotModel();
       fullRobotModel.getOneDoFJoints(oneDoFJoints);
 
-      OneDoFJoint[] jointArray = ScrewTools.filterJoints(controllerToolbox.getControlledJoints(), OneDoFJoint.class);
-      lowLevelOneDoFJointDesiredDataHolder.registerJointsWithEmptyData(jointArray);
+      lowLevelOneDoFJointDesiredDataHolder.registerJointsWithEmptyData(controlledJoints);
 
       for (int i = 0; i < oneDoFJoints.size(); i++)
       {

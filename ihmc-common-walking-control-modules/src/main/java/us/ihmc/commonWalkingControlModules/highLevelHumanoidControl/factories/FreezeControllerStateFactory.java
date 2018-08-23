@@ -4,6 +4,8 @@ import us.ihmc.commonWalkingControlModules.highLevelHumanoidControl.HighLevelCon
 import us.ihmc.commonWalkingControlModules.highLevelHumanoidControl.highLevelStates.FreezeControllerState;
 import us.ihmc.commonWalkingControlModules.highLevelHumanoidControl.highLevelStates.HighLevelControllerState;
 import us.ihmc.humanoidRobotics.communication.packets.dataobjects.HighLevelControllerName;
+import us.ihmc.robotics.screwTheory.OneDoFJoint;
+import us.ihmc.robotics.screwTheory.ScrewTools;
 
 public class FreezeControllerStateFactory implements HighLevelControllerStateFactory
 {
@@ -13,8 +15,11 @@ public class FreezeControllerStateFactory implements HighLevelControllerStateFac
    public HighLevelControllerState getOrCreateControllerState(HighLevelControllerFactoryHelper controllerFactoryHelper)
    {
       if (freezeControllerState == null)
-         freezeControllerState = new FreezeControllerState(controllerFactoryHelper.getHighLevelHumanoidControllerToolbox(),
-                                                           controllerFactoryHelper.getHighLevelControllerParameters(), controllerFactoryHelper.getLowLevelControllerOutput());
+      {
+         freezeControllerState = new FreezeControllerState(controllerFactoryHelper.getHighLevelHumanoidControllerToolbox().getControlledOneDoFJoints(),
+                                                           controllerFactoryHelper.getHighLevelControllerParameters(),
+                                                           controllerFactoryHelper.getLowLevelControllerOutput());
+      }
 
       return freezeControllerState;
    }

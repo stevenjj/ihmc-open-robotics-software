@@ -31,23 +31,22 @@ public class StandPrepControllerState extends HighLevelControllerState
    private final YoDouble minimumTimeDoneWithStandPrep = new YoDouble("minimumTimeDoneWithStandPrep", registry);
    private final JointDesiredOutputListReadOnly highLevelControlOutput;
 
-   public StandPrepControllerState(HighLevelHumanoidControllerToolbox controllerToolbox, HighLevelControllerParameters highLevelControllerParameters,
+   public StandPrepControllerState(OneDoFJoint[] controlledJoints, HighLevelControllerParameters highLevelControllerParameters,
                                    JointDesiredOutputListReadOnly highLevelControlOutput)
    {
-      this(controllerToolbox, highLevelControllerParameters, highLevelControlOutput, MINIMUM_TIME_DONE_WITH_STAND_PREP);
+      this(controlledJoints, highLevelControllerParameters, highLevelControlOutput, MINIMUM_TIME_DONE_WITH_STAND_PREP);
    }
 
-   public StandPrepControllerState(HighLevelHumanoidControllerToolbox controllerToolbox, HighLevelControllerParameters highLevelControllerParameters,
+   public StandPrepControllerState(OneDoFJoint[] controlledJoints, HighLevelControllerParameters highLevelControllerParameters,
                                    JointDesiredOutputListReadOnly highLevelControlOutput, double minimumTimeDoneWithStandPrep)
    {
-      super(controllerState, highLevelControllerParameters, controllerToolbox);
+      super(controllerState, highLevelControllerParameters, controlledJoints);
       this.highLevelControlOutput = highLevelControlOutput;
 
       this.timeToPrepareForStanding.set(highLevelControllerParameters.getTimeToMoveInStandPrep());
       this.minimumTimeDoneWithStandPrep.set(minimumTimeDoneWithStandPrep);
 
       WholeBodySetpointParameters standPrepParameters = highLevelControllerParameters.getStandPrepParameters();
-      OneDoFJoint[] controlledJoints = ScrewTools.filterJoints(controllerToolbox.getControlledJoints(), OneDoFJoint.class);
       lowLevelOneDoFJointDesiredDataHolder.registerJointsWithEmptyData(controlledJoints);
 
       for (OneDoFJoint controlledJoint : controlledJoints)

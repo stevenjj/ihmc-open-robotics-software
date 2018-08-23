@@ -26,10 +26,10 @@ public class SmoothTransitionControllerState extends HighLevelControllerState
    private final HighLevelControllerState finalControllerState;
 
    public SmoothTransitionControllerState(String namePrefix, HighLevelControllerName controllerState, HighLevelControllerState initialControllerState,
-                                          HighLevelControllerState finalControllerState, HighLevelHumanoidControllerToolbox controllerToolbox,
+                                          HighLevelControllerState finalControllerState, OneDoFJoint[] controlledJoints,
                                           HighLevelControllerParameters highLevelControllerParameters)
    {
-      super(namePrefix, controllerState, highLevelControllerParameters, controllerToolbox);
+      super(namePrefix, controllerState, highLevelControllerParameters, controlledJoints);
 
       this.initialControllerState = initialControllerState;
       this.finalControllerState = finalControllerState;
@@ -39,7 +39,6 @@ public class SmoothTransitionControllerState extends HighLevelControllerState
       transitionRatioTrajectory = new YoPolynomial(namePrefix + "TransitionRatioTrajectory", 2, registry);
       this.standTransitionDuration.set(highLevelControllerParameters.getTimeInStandTransition());
 
-      OneDoFJoint[] controlledJoints = ScrewTools.filterJoints(controllerToolbox.getControlledJoints(), OneDoFJoint.class);
       lowLevelOneDoFJointDesiredDataHolder.registerJointsWithEmptyData(controlledJoints);
 
       for (OneDoFJoint controlledJoint : controlledJoints)

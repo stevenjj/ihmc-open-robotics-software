@@ -19,15 +19,13 @@ public class HoldPositionControllerState extends HighLevelControllerState
 
    private final PairList<OneDoFJoint, YoDouble> jointSetpoints = new PairList<>();
 
-   public HoldPositionControllerState(HighLevelControllerName stateEnum, HighLevelHumanoidControllerToolbox controllerToolbox,
+   public HoldPositionControllerState(HighLevelControllerName stateEnum, OneDoFJoint[] controlledJoints,
                                       HighLevelControllerParameters highLevelControllerParameters, JointDesiredOutputListReadOnly highLevelControllerOutput)
    {
-      super(stateEnum, highLevelControllerParameters, controllerToolbox);
+      super(stateEnum, highLevelControllerParameters, controlledJoints);
 
       this.highLevelControllerOutput = highLevelControllerOutput;
       String nameSuffix = "_" + stateEnum.name();
-
-      OneDoFJoint[] controlledJoints = ScrewTools.filterJoints(controllerToolbox.getControlledJoints(), OneDoFJoint.class);
 
       for (OneDoFJoint controlledJoint : controlledJoints)
       {
