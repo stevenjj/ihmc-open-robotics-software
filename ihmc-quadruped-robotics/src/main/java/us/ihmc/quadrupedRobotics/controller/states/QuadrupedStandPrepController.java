@@ -1,16 +1,12 @@
 package us.ihmc.quadrupedRobotics.controller.states;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import us.ihmc.quadrupedRobotics.controller.QuadrupedControlMode;
+import us.ihmc.quadrupedRobotics.model.QuadrupedInitialPositionParameters;
+import us.ihmc.quadrupedRobotics.model.QuadrupedRuntimeEnvironment;
 import us.ihmc.robotModels.FullQuadrupedRobotModel;
 import us.ihmc.robotics.partNames.QuadrupedJointName;
-import us.ihmc.quadrupedRobotics.controller.ControllerEvent;
-import us.ihmc.quadrupedRobotics.controller.QuadrupedController;
-import us.ihmc.quadrupedRobotics.model.QuadrupedRuntimeEnvironment;
-import us.ihmc.quadrupedRobotics.model.QuadrupedInitialPositionParameters;
 import us.ihmc.robotics.screwTheory.OneDoFJoint;
+import us.ihmc.robotics.stateMachine.core.State;
 import us.ihmc.robotics.trajectories.MinimumJerkTrajectory;
 import us.ihmc.sensorProcessing.outputData.JointDesiredControlMode;
 import us.ihmc.sensorProcessing.outputData.JointDesiredOutput;
@@ -19,10 +15,13 @@ import us.ihmc.yoVariables.parameters.DoubleParameter;
 import us.ihmc.yoVariables.registry.YoVariableRegistry;
 import us.ihmc.yoVariables.variable.YoBoolean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A controller that will track the minimum jerk trajectory to bring joints to a preparatory pose.
  */
-public class QuadrupedStandPrepController implements QuadrupedController
+public class QuadrupedStandPrepController implements State
 {
    private final YoVariableRegistry registry = new YoVariableRegistry(getClass().getSimpleName());
 
@@ -120,9 +119,9 @@ public class QuadrupedStandPrepController implements QuadrupedController
    }
 
    @Override
-   public ControllerEvent fireEvent(double timeInState)
+   public boolean isDone(double timeInState)
    {
-      return isMotionExpired() ? ControllerEvent.DONE : null;
+      return isMotionExpired();
    }
 
    @Override
