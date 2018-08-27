@@ -4,6 +4,7 @@ import controller_msgs.msg.dds.HighLevelStateChangeStatusMessage;
 import controller_msgs.msg.dds.WalkingControllerFailureStatusMessage;
 import us.ihmc.commonWalkingControlModules.configurations.HighLevelControllerParameters;
 import us.ihmc.commonWalkingControlModules.controllerAPI.input.ControllerNetworkSubscriber;
+import us.ihmc.commonWalkingControlModules.controllerCore.command.lowLevel.YoLowLevelOneDoFJointDesiredDataHolder;
 import us.ihmc.commonWalkingControlModules.highLevelHumanoidControl.highLevelStates.*;
 import us.ihmc.communication.ROS2Tools;
 import us.ihmc.communication.controllerAPI.CommandInputManager;
@@ -32,6 +33,8 @@ import us.ihmc.robotics.stateMachine.factories.StateMachineFactory;
 import us.ihmc.ros2.RealtimeRos2Node;
 import us.ihmc.sensorProcessing.model.RobotMotionStatusHolder;
 import us.ihmc.sensorProcessing.outputData.JointDesiredOutputList;
+import us.ihmc.sensorProcessing.outputData.JointDesiredOutputListReadOnly;
+import us.ihmc.sensorProcessing.outputData.JointDesiredOutputReadOnly;
 import us.ihmc.simulationconstructionset.util.RobotController;
 import us.ihmc.tools.thread.CloseableAndDisposable;
 import us.ihmc.tools.thread.CloseableAndDisposableRegistry;
@@ -64,6 +67,8 @@ public class QuadrupedControllerManager implements RobotController, CloseableAnd
    private final QuadrupedControllerToolbox controllerToolbox;
    private final QuadrupedControlManagerFactory controlManagerFactory;
    private final OutputProcessor outputProcessor;
+   private final YoLowLevelOneDoFJointDesiredDataHolder yoLowLevelOneDoFJointDesiredDataHolder;
+   private final JointDesiredOutputList lowLevelControllerOutput;
 
    private final CommandInputManager commandInputManager;
    private final StatusMessageOutputManager statusMessageOutputManager;
@@ -75,6 +80,8 @@ public class QuadrupedControllerManager implements RobotController, CloseableAnd
    {
       this.controllerToolbox = new QuadrupedControllerToolbox(runtimeEnvironment, physicalProperties, registry, runtimeEnvironment.getGraphicsListRegistry());
       this.runtimeEnvironment = runtimeEnvironment;
+      this.lowLevelControllerOutput = runtimeEnvironment.getJointDesiredOutputList();
+      this.yoLowLevelOneDoFJointDesiredDataHolder = new YoLowLevelOneDoFJointDesiredDataHolder(runtimeEnvironment.getFullRobotModel().getControllableOneDoFJoints(), registry);
 
       // Initialize control modules
       this.controlManagerFactory = new QuadrupedControlManagerFactory(controllerToolbox, physicalProperties, runtimeEnvironment.getGraphicsListRegistry(),
@@ -189,6 +196,8 @@ public class QuadrupedControllerManager implements RobotController, CloseableAnd
 
       // update output processor
       outputProcessor.update();
+
+      copyJointDesiredsToJoints();
    }
 
    @Override
@@ -291,6 +300,22 @@ public class QuadrupedControllerManager implements RobotController, CloseableAnd
    private StateTransitionCondition createRequestedTransition(HighLevelControllerName endState)
    {
       return time -> requestedControllerState.getEnumValue() == endState;
+   }
+
+   private void copyJointDesiredsToJoints()
+   {
+      JointDesiredOutputListReadOnly lowLevelOneDoFJointDesiredDataHolder = stateMachine.getCurrentState().getOutputForLowLevelController();
+      for (int jointIndex = 0; jointIndex < lowLevelOneDoFJointDesiredDataHolder.getNumberOfJointsWithDesiredOutput(); jointIndex++)
+      {
+         OneDoFJoint controlledJoint = lowLevelOneDoFJointDesiredDataHolder.getOneDoFJoint(jointIndex);
+         JointDesiredOutputReadOnly lowLevelJointData = lowLevelOneDoFJointDesiredDataHolder.getJointDesiredOutput(controlledJoint);
+
+         if (!lowLevelJointData.hasControlMode())
+            throw new NullPointerException("Joint: " + controlledJoint.getName() + " has no control mode.");
+      }
+
+      yoLowLevelOneDoFJointDesiredDataHolder.overwriteWith(lowLevelOneDoFJointDesiredDataHolder);
+      lowLevelControllerOutput.overwriteWith(lowLevelOneDoFJointDesiredDataHolder);
    }
 
    public void createControllerNetworkSubscriber(String robotName, RealtimeRos2Node realtimeRos2Node)
