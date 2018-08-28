@@ -3,7 +3,7 @@ package us.ihmc.footstepPlanning.graphSearch.parameters;
 public interface FootstepPlannerCostParameters
 {
    /**
-    * When using a cost based planning approach this value defined how the yaw of a footstep will be
+    * When using a cost based planning approach this value defines how the yaw of a footstep will be
     * weighted in comparison to its position.
     */
    default double getYawWeight()
@@ -39,6 +39,40 @@ public interface FootstepPlannerCostParameters
    default double getLateralWeight()
    {
       return 1.0;
+   }
+
+   /**
+    * When using a cost based planning approach this value defines how the height change when stepping
+    * up will be weighted.
+    */
+   default double getStepUpWeight()
+   {
+      return 0.0;
+   }
+
+   /**
+    * When using a cost based planning approach this value defines how the height change when stepping
+    * down will be weighted.
+    */
+   default double getStepDownWeight()
+   {
+      return 0.0;
+   }
+
+   /**
+    * When using a cost based planning approach this value defines how the roll will be weighted.
+    */
+   default double getRollWeight()
+   {
+      return 0.0;
+   }
+
+   /**
+    * When using a cost based planning approach this value defines how the pitch will be weighted.
+    */
+   default double getPitchWeight()
+   {
+      return 0.0;
    }
 
    /**

@@ -346,6 +346,6 @@ public interface FootstepPlannerParameters
     */
    default FootstepPlannerCostParameters getCostParameters()
    {
-      return null;
+      return new DefaultFootstepPlanningCostParameters();
    }
 }
