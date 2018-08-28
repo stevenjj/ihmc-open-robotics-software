@@ -19,7 +19,6 @@ import us.ihmc.footstepPlanning.graphSearch.heuristics.NodeComparator;
 import us.ihmc.footstepPlanning.graphSearch.nodeChecking.*;
 import us.ihmc.footstepPlanning.graphSearch.nodeExpansion.FootstepNodeExpansion;
 import us.ihmc.footstepPlanning.graphSearch.stepCost.DistanceAndYawBasedCost;
-import us.ihmc.footstepPlanning.graphSearch.stepCost.EuclideanDistanceAndYawBasedCost;
 import us.ihmc.footstepPlanning.graphSearch.stepCost.FootstepCost;
 import us.ihmc.footstepPlanning.graphSearch.stepCost.FootstepCostBuilder;
 import us.ihmc.robotics.geometry.PlanarRegionsList;
@@ -375,8 +374,7 @@ public class AStarFootstepPlanner implements FootstepPlanner
       FootstepCostBuilder costBuilder = new FootstepCostBuilder();
       costBuilder.setFootstepPlannerParameters(parameters);
       costBuilder.setIncludeHeightCost(true);
-      costBuilder.setIncludeHeightCost(true);
-      costBuilder.setUsePitchAndRollCost(true);
+      costBuilder.setIncludePitchAndRollCost(true);
 
       FootstepCost footstepCost = costBuilder.buildCost();
 

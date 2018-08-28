@@ -11,7 +11,7 @@ public class FootstepCostBuilder
 
    private final OptionalFactoryField<Boolean> includeHeightCost = new OptionalFactoryField<>("includeHeightCost");
    private final OptionalFactoryField<Boolean> useQuadraticHeightCost = new OptionalFactoryField<>("useQuadraticHeightCost");
-   private final OptionalFactoryField<Boolean> usePitchAndRollCost = new OptionalFactoryField<>("usePitchAndRollCost");
+   private final OptionalFactoryField<Boolean> includePitchAndRollCost = new OptionalFactoryField<>("includePitchAndRollCost");
 
    public void setFootstepPlannerParameters(FootstepPlannerParameters footstepPlannerParameters)
    {
@@ -28,16 +28,16 @@ public class FootstepCostBuilder
       this.useQuadraticHeightCost.set(useQuadraticHeightCost);
    }
 
-   public void setUsePitchAndRollCost(boolean usePitchAndRollCost)
+   public void setIncludePitchAndRollCost(boolean includePitchAndRollCost)
    {
-      this.usePitchAndRollCost.set(usePitchAndRollCost);
+      this.includePitchAndRollCost.set(includePitchAndRollCost);
    }
 
    public FootstepCost buildCost()
    {
       includeHeightCost.setDefaultValue(false);
       useQuadraticHeightCost.setDefaultValue(false);
-      usePitchAndRollCost.setDefaultValue(false);
+      includePitchAndRollCost.setDefaultValue(false);
 
       CompositeFootstepCost compositeFootstepCost = new CompositeFootstepCost();
 
@@ -49,7 +49,7 @@ public class FootstepCostBuilder
             compositeFootstepCost.addFootstepCost(new LinearHeightCost(footstepPlannerParameters.get().getCostParameters()));
       }
 
-      if (usePitchAndRollCost.get())
+      if (includePitchAndRollCost.get())
          compositeFootstepCost.addFootstepCost(new PitchAndRollBasedCost(footstepPlannerParameters.get().getCostParameters()));
 
       compositeFootstepCost.addFootstepCost(new DistanceAndYawBasedCost(footstepPlannerParameters.get()));
