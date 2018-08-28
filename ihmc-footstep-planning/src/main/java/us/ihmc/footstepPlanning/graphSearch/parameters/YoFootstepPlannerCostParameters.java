@@ -8,6 +8,10 @@ public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParam
    private final YoDouble yawWeight;
    private final YoDouble forwardWeight;
    private final YoDouble lateralWeight;
+   private final YoDouble stepUpWeight;
+   private final YoDouble stepDownWeight;
+   private final YoDouble rollWeight;
+   private final YoDouble pitchWeight;
    private final YoDouble costPerStep;
 
    public YoFootstepPlannerCostParameters(YoVariableRegistry registry, FootstepPlannerCostParameters defaults)
@@ -15,6 +19,10 @@ public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParam
       yawWeight = new YoDouble("yawWeight", registry);
       forwardWeight = new YoDouble("forwardWeight", registry);
       lateralWeight = new YoDouble("lateralWeight", registry);
+      stepUpWeight = new YoDouble("stepUpWeight", registry);
+      stepDownWeight = new YoDouble("stepDownWeight", registry);
+      rollWeight = new YoDouble("rollWeight", registry);
+      pitchWeight = new YoDouble("pitchWeight", registry);
       costPerStep = new YoDouble("costPerStep", registry);
 
       set(defaults);
@@ -25,6 +33,10 @@ public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParam
       yawWeight.set(defaults.getYawWeight());
       forwardWeight.set(defaults.getForwardWeight());
       lateralWeight.set(defaults.getLateralWeight());
+      stepUpWeight.set(defaults.getStepUpWeight());
+      stepDownWeight.set(defaults.getStepDownWeight());
+      rollWeight.set(defaults.getRollWeight());
+      pitchWeight.set(defaults.getPitchWeight());
       costPerStep.set(defaults.getCostPerStep());
    }
 
@@ -50,5 +62,29 @@ public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParam
    public double getLateralWeight()
    {
       return lateralWeight.getDoubleValue();
+   }
+
+   @Override
+   public double getStepUpWeight()
+   {
+      return stepUpWeight.getDoubleValue();
+   }
+
+   @Override
+   public double getStepDownWeight()
+   {
+      return stepDownWeight.getDoubleValue();
+   }
+
+   @Override
+   public double getRollWeight()
+   {
+      return rollWeight.getDoubleValue();
+   }
+
+   @Override
+   public double getPitchWeight()
+   {
+      return pitchWeight.getDoubleValue();
    }
 }
