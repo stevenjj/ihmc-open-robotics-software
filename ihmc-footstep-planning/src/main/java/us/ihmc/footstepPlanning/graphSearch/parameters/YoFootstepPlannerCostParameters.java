@@ -16,6 +16,7 @@ public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParam
    private final YoDouble costPerStep;
    
    private final YoBoolean useQuadraticDistanceCost;
+   private final YoBoolean useQuadraticHeightCost;
 
    public YoFootstepPlannerCostParameters(YoVariableRegistry registry, FootstepPlannerCostParameters defaults)
    {
@@ -29,6 +30,7 @@ public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParam
       costPerStep = new YoDouble("costPerStep", registry);
       
       useQuadraticDistanceCost = new YoBoolean("useQuadraticDistanceCost", registry);
+      useQuadraticHeightCost = new YoBoolean("useQuadraticHeightCost", registry);
 
       set(defaults);
    }
@@ -44,7 +46,8 @@ public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParam
       pitchWeight.set(defaults.getPitchWeight());
       costPerStep.set(defaults.getCostPerStep());
       
-      useQuadraticDistanceCost.set(defaults.useQuadraticDistanceCost());;
+      useQuadraticDistanceCost.set(defaults.useQuadraticDistanceCost());
+      useQuadraticHeightCost.set(defaults.useQuadraticHeightCost());
    }
 
    @Override
@@ -99,5 +102,11 @@ public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParam
    public boolean useQuadraticDistanceCost()
    {
       return useQuadraticDistanceCost.getBooleanValue();
+   }
+
+   @Override
+   public boolean useQuadraticHeightCost()
+   {
+      return useQuadraticHeightCost.getBooleanValue();
    }
 }

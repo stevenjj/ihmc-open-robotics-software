@@ -46,6 +46,11 @@ public interface FootstepPlannerCostParameters
       return false;
    }
 
+   default boolean useQuadraticHeightCost()
+   {
+      return false;
+   }
+
    /**
     * When using a cost based planning approach this value defines how the height change when stepping
     * up will be weighted.
