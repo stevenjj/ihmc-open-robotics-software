@@ -299,7 +299,7 @@ public class QuadrupedControllerManager implements RobotController, CloseableAnd
 
    private StateTransitionCondition createRequestedTransition(HighLevelControllerName endState)
    {
-      return time -> requestedControllerState.getEnumValue() == endState;
+      return time -> requestedControllerStateReference.get() != null && requestedControllerStateReference.get() == endState;
    }
 
    private void copyJointDesiredsToJoints()
