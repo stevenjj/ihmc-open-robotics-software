@@ -34,9 +34,13 @@ public class BodyCollisionNodeChecker implements FootstepNodeChecker
    private final GilbertJohnsonKeerthiCollisionDetector collisionDetector = new GilbertJohnsonKeerthiCollisionDetector();
 
    private final RecyclingArrayList<ConvexPolytope> planarRegionPolytopes = new RecyclingArrayList<>(ConvexPolytope.class);
+   
+   private final FootstepPlannerParameters parameters;
 
    public BodyCollisionNodeChecker(FootstepPlannerParameters parameters)
    {
+      this.parameters = parameters;
+      
       bodyCollisionBox = new Box3D();
       bodyCollisionBox.setSize(parameters.getBodyBoxDepth(), parameters.getBodyBoxWidth(), parameters.getBodyBoxHeight());
 
@@ -73,9 +77,8 @@ public class BodyCollisionNodeChecker implements FootstepNodeChecker
    @Override
    public boolean isNodeValid(FootstepNode node, FootstepNode previousNode)
    {
-      if (previousNode == null)
+      if (previousNode == null || !parameters.checkForBodyBoxCollisions())
       {
-         PrintTools.info("previousNode is null");
          return true;
       }
 

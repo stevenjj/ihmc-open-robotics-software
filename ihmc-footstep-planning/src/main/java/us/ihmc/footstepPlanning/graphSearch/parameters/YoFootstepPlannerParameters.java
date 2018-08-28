@@ -8,7 +8,6 @@ import us.ihmc.yoVariables.variable.YoInteger;
 public class YoFootstepPlannerParameters implements FootstepPlannerParameters
 {
    private final YoVariableRegistry registry = new YoVariableRegistry(getClass().getSimpleName());
-
    private final YoDouble maximumStepReach = new YoDouble("maximumStepReach", registry);
    private final YoDouble minimumFootholdPercent = new YoDouble("minimumFootholdPercent", registry);
    private final YoDouble idealFootstepLength = new YoDouble("idealFootstepLength", registry);
@@ -39,6 +38,8 @@ public class YoFootstepPlannerParameters implements FootstepPlannerParameters
    private final YoInteger minimumStepForBestEffortPlan = new YoInteger("minimumStepForBestEffortPlan", registry);
    private final YoDouble minXClearanceFromStance = new YoDouble("minXClearanceFromStance", registry);
    private final YoDouble minYClearanceFromStance = new YoDouble("minYClearanceFromStance", registry);
+   
+   private final YoBoolean checkForBodyBoxCollisions = new YoBoolean("checkForBodyBoxCollisions", registry);
 
    private final YoFootstepPlannerCostParameters costParameters;
 
@@ -83,6 +84,8 @@ public class YoFootstepPlannerParameters implements FootstepPlannerParameters
       minimumStepForBestEffortPlan.set(defaults.getMinimumStepsForBestEffortPlan());
       minXClearanceFromStance.set(defaults.getMinXClearanceFromStance());
       minYClearanceFromStance.set(defaults.getMinYClearanceFromStance());
+      
+      checkForBodyBoxCollisions.set(defaults.checkForBodyBoxCollisions());
 
       costParameters.set(defaults.getCostParameters());
    }
@@ -241,6 +244,12 @@ public class YoFootstepPlannerParameters implements FootstepPlannerParameters
    public double getBodyBoxCenterHeight()
    {
       return bodyBoxCenterHeight.getDoubleValue();
+   }
+   
+   @Override
+   public boolean checkForBodyBoxCollisions()
+   {
+      return checkForBodyBoxCollisions.getBooleanValue();
    }
 
    @Override

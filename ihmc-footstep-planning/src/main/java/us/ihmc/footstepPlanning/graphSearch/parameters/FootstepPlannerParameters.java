@@ -360,6 +360,11 @@ public interface FootstepPlannerParameters
    {
       return 1.5;
    }
+   
+   default boolean checkForBodyBoxCollisions()
+   {
+      return false;
+   }
 
    /**
     * Parameter used inside the node expansion to avoid footsteps that would be on top of the stance foot.
