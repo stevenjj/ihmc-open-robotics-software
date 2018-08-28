@@ -10,12 +10,12 @@ public interface FootstepPlannerParameters
    /**
     * Returns the ideal step width for walking on flat ground.
     */
-   public abstract double getIdealFootstepWidth();
+   double getIdealFootstepWidth();
 
    /**
     * Returns the ideal step length for walking on flat ground.
     */
-   public abstract double getIdealFootstepLength();
+   double getIdealFootstepLength();
 
    /**
     * If the planner in use utilized footstep wiggling (see {@link PolygonWiggler}) to move footholds onto planer
@@ -32,7 +32,7 @@ public interface FootstepPlannerParameters
     * </ul>
     * </p>
     */
-   public default double getWiggleInsideDelta()
+   default double getWiggleInsideDelta()
    {
       return 0.0;
    }
@@ -49,7 +49,7 @@ public interface FootstepPlannerParameters
     * This parameter is intended to prevent accepting candidate footsteps that are near both the maximum step length and step width.
     * </p>
     */
-   public abstract double getMaximumStepReach();
+   double getMaximumStepReach();
 
    /**
     * Maximum yaw between consecutive footsteps
@@ -64,7 +64,7 @@ public interface FootstepPlannerParameters
     * its maximum reach.
     * </p>
     */
-   public abstract double getMaximumStepYaw();
+   double getMaximumStepYaw();
 
    /**
     * Minimum step width the planner will consider for candidate steps.
@@ -79,7 +79,7 @@ public interface FootstepPlannerParameters
     * on top of each other. If too high, footsteps might not be kinematically feasible.
     * </p>
     */
-   public abstract double getMinimumStepWidth();
+   double getMinimumStepWidth();
 
    /**
     * Minimum step length the planner will consider for candidate steps.
@@ -94,7 +94,7 @@ public interface FootstepPlannerParameters
     * on top of each other. If too high, footsteps might not be kinematically feasible.
     * </p>
     */
-   public default double getMinimumStepLength()
+   default double getMinimumStepLength()
    {
       return -getMaximumStepReach();
    }
@@ -102,7 +102,7 @@ public interface FootstepPlannerParameters
    /**
     * Minimum step yaw.
     */
-   public default double getMinimumStepYaw()
+   default double getMinimumStepYaw()
    {
       return 0.0;
    }
@@ -124,7 +124,7 @@ public interface FootstepPlannerParameters
     * it's very close to hitting it's ankle pitch joint limit
     * </p>
     */
-   public default double getMaximumStepXWhenForwardAndDown()
+   default double getMaximumStepXWhenForwardAndDown()
    {
       return Double.POSITIVE_INFINITY;
    }
@@ -146,7 +146,7 @@ public interface FootstepPlannerParameters
     * it's very close to hitting it's ankle pitch joint limit
     * </p>
     */
-   public default double getMaximumStepZWhenForwardAndDown()
+   default double getMaximumStepZWhenForwardAndDown()
    {
       return Double.POSITIVE_INFINITY;
    }
@@ -159,7 +159,7 @@ public interface FootstepPlannerParameters
     * z-up sole frame.
     * </p>
     */
-   public abstract double getMaximumStepZ();
+   double getMaximumStepZ();
 
    /**
     * Minimum percentage that a candidate footstep needs to overlap with its associated planar region in order to be accepted.
@@ -167,7 +167,7 @@ public interface FootstepPlannerParameters
     * If this parameter is set to 1.0 only full footsteps are allowed. A value less then 1.0 will allow partial footholds.
     * </p>
     */
-   public default double getMinimumFootholdPercent()
+   default double getMinimumFootholdPercent()
    {
       return 0.9;
    }
@@ -181,7 +181,7 @@ public interface FootstepPlannerParameters
     * z-value less than cos(minimumSurfaceInclineRadians), it will be rejected.
     * </p>
     */
-   public default double getMinimumSurfaceInclineRadians()
+   default double getMinimumSurfaceInclineRadians()
    {
       return Math.toRadians(45.0);
    }
@@ -197,7 +197,7 @@ public interface FootstepPlannerParameters
     *
     * If this parameter is set to true (recommended), the second wiggle method will be used.
     */
-   public default boolean getWiggleIntoConvexHullOfPlanarRegions()
+   default boolean getWiggleIntoConvexHullOfPlanarRegions()
    {
       return true;
    }
@@ -208,7 +208,7 @@ public interface FootstepPlannerParameters
     * {@link #getMaximumXYWiggleDistance}, and {@link #getMaximumYawWiggle}. If this transform cannot be found, the
     * candidate footstep will be rejected if this method returns {@code true}.
     */
-   public default boolean getRejectIfCannotFullyWiggleInside()
+   default boolean getRejectIfCannotFullyWiggleInside()
    {
       return false;
    }
@@ -217,7 +217,7 @@ public interface FootstepPlannerParameters
     * When wiggling a candidate footstep into a planar region, this is the maximum distance xy-distance
     * distance the planner will use
     */
-   public default double getMaximumXYWiggleDistance()
+   default double getMaximumXYWiggleDistance()
    {
       return FootstepNode.gridSizeXY / 2.0;
    }
@@ -226,7 +226,7 @@ public interface FootstepPlannerParameters
     * When wiggling a candidate footstep into a planar region, this is the maximum yaw
     * distance the planner will use
     */
-   public default double getMaximumYawWiggle()
+   default double getMaximumYawWiggle()
    {
       return FootstepNode.gridSizeYaw / 2.0;
    }
@@ -237,7 +237,7 @@ public interface FootstepPlannerParameters
     * is never more than maximumZPenetrationOnValleyRegions above the footstep, it won't be rejected,
     * otherwise it will.
     */
-   public default double getMaximumZPenetrationOnValleyRegions()
+   default double getMaximumZPenetrationOnValleyRegions()
    {
       return Double.POSITIVE_INFINITY;
    }
@@ -254,7 +254,7 @@ public interface FootstepPlannerParameters
     * If this value is too low, the planner will unnecessarily reject footsteps. If too high, footsteps might not be kinematically feasible.
     * </p>
     */
-   public abstract double getMaximumStepWidth();
+   double getMaximumStepWidth();
 
    /**
     * The planner can be setup to avoid footsteps near the bottom of "cliffs". When the footstep has a planar region
@@ -267,7 +267,7 @@ public interface FootstepPlannerParameters
     * generator is capable of swinging over.
     * </p>
     */
-   public default double getCliffHeightToAvoid()
+   default double getCliffHeightToAvoid()
    {
       return Double.MAX_VALUE;
    }
@@ -283,7 +283,7 @@ public interface FootstepPlannerParameters
     * generator is capable of swinging over.
     * </p>
     */
-   public default double getMinimumDistanceFromCliffBottoms()
+   default double getMinimumDistanceFromCliffBottoms()
    {
       return 0.0;
    }
@@ -295,7 +295,7 @@ public interface FootstepPlannerParameters
     * the "best" effort plan, where the plan is at least {@link #getMinimumStepsForBestEffortPlan()} steps long
     * "best" is determined by the planner.
     */
-   public default boolean getReturnBestEffortPlan()
+   default boolean getReturnBestEffortPlan()
    {
       return false;
    }
@@ -304,7 +304,7 @@ public interface FootstepPlannerParameters
     * When {@link #getReturnBestEffortPlan()} is true, the planner will return the best effort plan if the plan
     * contains at least this many footsteps.
     */
-   public default int getMinimumStepsForBestEffortPlan()
+   default int getMinimumStepsForBestEffortPlan()
    {
       return 3;
    }
@@ -313,7 +313,7 @@ public interface FootstepPlannerParameters
     * When using a cost based planning approach this value defined how the yaw of a footstep will be
     * weighted in comparison to its position.
     */
-   public default double getYawWeight()
+   default double getYawWeight()
    {
       return 0.1;
    }
@@ -322,7 +322,7 @@ public interface FootstepPlannerParameters
     * When using a cost based planning approach this value defines the cost that is added for each step
     * taken. Setting this value to a high number will favor plans with less steps.
     */
-   public default double getCostPerStep()
+   default double getCostPerStep()
    {
       return 0.15;
    }
@@ -333,7 +333,7 @@ public interface FootstepPlannerParameters
     * ground triggering this this parameter defines a ground clearance under which obstacles are allowed.
     * This should be set to be slightly above cinder block height (20.3cm) for Atlas.
     */
-   public default double getBodyGroundClearance()
+   default double getBodyGroundClearance()
    {
       return 0.25;
    }
@@ -343,7 +343,7 @@ public interface FootstepPlannerParameters
     * Nodes are only added to the expanded list if they are outside the box around the stance foot defined by
     * this parameter.
     */
-   public default double getMinXClearanceFromStance()
+   default double getMinXClearanceFromStance()
    {
       return 0.0;
    }
@@ -353,7 +353,7 @@ public interface FootstepPlannerParameters
     * Nodes are only added to the expanded list if they are outside the box around the stance foot defined by
     * this parameter.
     */
-   public default double getMinYClearanceFromStance()
+   default double getMinYClearanceFromStance()
    {
       return 0.0;
    }

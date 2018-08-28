@@ -342,8 +342,13 @@ public class AStarFootstepPlanner implements FootstepPlanner
                                                               SideDependentList<ConvexPolygon2D> footPolygons, FootstepNodeExpansion expansion,
                                                               YoVariableRegistry registry)
    {
-      AlwaysValidNodeChecker nodeChecker = new AlwaysValidNodeChecker();
       FlatGroundFootstepNodeSnapper snapper = new FlatGroundFootstepNodeSnapper();
+
+      AlwaysValidNodeChecker alwaysValidNodeChecker = new AlwaysValidNodeChecker();
+      BodyCollisionNodeChecker bodyCollisionNodeChecker = new BodyCollisionNodeChecker();
+
+      FootstepNodeChecker nodeChecker = new FootstepNodeCheckerOfCheckers(Arrays.asList(alwaysValidNodeChecker, bodyCollisionNodeChecker));
+
 
       DistanceAndYawBasedHeuristics heuristics = new DistanceAndYawBasedHeuristics(parameters, registry);
       DistanceAndYawBasedCost stepCostCalculator = new DistanceAndYawBasedCost(parameters);
@@ -360,14 +365,9 @@ public class AStarFootstepPlanner implements FootstepPlanner
 
       SnapBasedNodeChecker snapBasedNodeChecker = new SnapBasedNodeChecker(parameters, footPolygons, snapper);
       BodyCollisionNodeChecker bodyCollisionNodeChecker = new BodyCollisionNodeChecker();
-      List<FootstepNodeChecker> nodeCheckers = new ArrayList<>();
-      nodeCheckers.add(snapBasedNodeChecker);
-      nodeCheckers.add(bodyCollisionNodeChecker);
-
-      FootstepNodeCheckerOfCheckers nodeChecker = new FootstepNodeCheckerOfCheckers(nodeCheckers);
-
       PlanarRegionBaseOfCliffAvoider cliffAvoider = new PlanarRegionBaseOfCliffAvoider(parameters, snapper, footPolygons);
-      FootstepNodeChecker checkerOfCheckers = new FootstepNodeCheckerOfCheckers(Arrays.asList(nodeChecker, cliffAvoider));
+
+      FootstepNodeChecker nodeChecker = new FootstepNodeCheckerOfCheckers(Arrays.asList(snapBasedNodeChecker, bodyCollisionNodeChecker, cliffAvoider));
 
       DistanceAndYawBasedHeuristics heuristics = new DistanceAndYawBasedHeuristics(parameters, registry);
 
@@ -382,7 +382,7 @@ public class AStarFootstepPlanner implements FootstepPlanner
 
       heuristics.setWeight(1.5);
 
-      AStarFootstepPlanner planner = new AStarFootstepPlanner(parameters, checkerOfCheckers, heuristics, expansion, footstepCost, postProcessingSnapper, viz,
+      AStarFootstepPlanner planner = new AStarFootstepPlanner(parameters, nodeChecker, heuristics, expansion, footstepCost, postProcessingSnapper, viz,
                                                               registry);
       return planner;
    }
