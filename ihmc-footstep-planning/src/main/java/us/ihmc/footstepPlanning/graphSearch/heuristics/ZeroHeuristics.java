@@ -7,7 +7,12 @@ public class ZeroHeuristics extends CostToGoHeuristics
 {
    public ZeroHeuristics(YoVariableRegistry registry)
    {
-      super(registry);
+      this("", registry);
+   }
+
+   public ZeroHeuristics(String namePrefix, YoVariableRegistry registry)
+   {
+      super(namePrefix, registry);
    }
 
    @Override

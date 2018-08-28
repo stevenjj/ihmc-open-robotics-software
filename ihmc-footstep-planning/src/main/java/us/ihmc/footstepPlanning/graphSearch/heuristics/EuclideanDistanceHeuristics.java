@@ -7,7 +7,12 @@ public class EuclideanDistanceHeuristics extends CostToGoHeuristics
 {
    public EuclideanDistanceHeuristics(YoVariableRegistry registry)
    {
-      super(registry);
+      this("", registry);
+   }
+
+   public EuclideanDistanceHeuristics(String namePrefix, YoVariableRegistry registry)
+   {
+      super(namePrefix, registry);
    }
 
    @Override
