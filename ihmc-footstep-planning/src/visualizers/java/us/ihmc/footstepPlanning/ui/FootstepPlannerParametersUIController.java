@@ -3,7 +3,7 @@ package us.ihmc.footstepPlanning.ui;
 import javafx.fxml.FXML;
 import javafx.scene.control.Slider;
 import us.ihmc.commons.PrintTools;
-import us.ihmc.footstepPlanning.graphSearch.FootstepPlannerParameters;
+import us.ihmc.footstepPlanning.graphSearch.parameters.FootstepPlannerParameters;
 import us.ihmc.javaFXToolkit.messager.JavaFXMessager;
 import us.ihmc.javaFXToolkit.messager.MessageBidirectionalBinding.PropertyToMessageTypeConverter;
 
