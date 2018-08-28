@@ -62,7 +62,7 @@ public class FootstepCostBuilder
       if (useQuadraticStepCost.get())
       {
          compositeFootstepCost.addFootstepCost(new QuadraticDistanceAndYawCost(footstepPlannerParameters.get()));
-         compositeFootstepCost.addFootstepCost(new PerStepCost(footstepPlannerParameters.get()));
+         compositeFootstepCost.addFootstepCost(new PerStepCost(footstepPlannerParameters.get().getCostParameters()));
       }
       else
       {

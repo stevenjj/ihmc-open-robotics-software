@@ -309,23 +309,6 @@ public interface FootstepPlannerParameters
       return 3;
    }
 
-   /**
-    * When using a cost based planning approach this value defined how the yaw of a footstep will be
-    * weighted in comparison to its position.
-    */
-   default double getYawWeight()
-   {
-      return 0.1;
-   }
-
-   /**
-    * When using a cost based planning approach this value defines the cost that is added for each step
-    * taken. Setting this value to a high number will favor plans with less steps.
-    */
-   default double getCostPerStep()
-   {
-      return 0.15;
-   }
 
    /**
     * Some node checkers will check if the body of the robot will move through a higher planar region
@@ -356,5 +339,13 @@ public interface FootstepPlannerParameters
    default double getMinYClearanceFromStance()
    {
       return 0.0;
+   }
+
+   /**
+    * Returns the cost parameters used by the cost-based planning approach.
+    */
+   default FootstepPlannerCostParameters getCostParameters()
+   {
+      return null;
    }
 }

@@ -1,4 +1,4 @@
-package us.ihmc.footstepPlanning;
+package us.ihmc.footstepPlanning.graphSearch.parameters;
 
 import us.ihmc.footstepPlanning.graphSearch.parameters.FootstepPlannerParameters;
 

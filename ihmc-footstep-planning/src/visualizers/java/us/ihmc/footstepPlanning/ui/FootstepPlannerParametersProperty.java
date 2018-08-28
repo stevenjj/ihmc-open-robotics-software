@@ -1,7 +1,7 @@
 package us.ihmc.footstepPlanning.ui;
 
 import javafx.beans.property.Property;
-import us.ihmc.footstepPlanning.DefaultFootstepPlanningParameters;
+import us.ihmc.footstepPlanning.graphSearch.parameters.DefaultFootstepPlanningParameters;
 import us.ihmc.robotEnvironmentAwareness.ui.properties.ParametersProperty;
 
 public class FootstepPlannerParametersProperty extends ParametersProperty<SettableFootstepPlannerParameters>

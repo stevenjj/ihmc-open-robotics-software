@@ -30,17 +30,20 @@ public class YoFootstepPlannerParameters implements FootstepPlannerParameters
    private final YoDouble minimumDistanceFromCliffBottoms = new YoDouble("minimumDistanceFromCliffBottoms", registry);
    private final YoDouble minimumSurfaceInclineRadians = new YoDouble("minimumSurfaceInclineRadians", registry);
    private final YoDouble maximumZPenetrationOnValleyRegions = new YoDouble("maximumZPenetrationOnValleyRegions", registry);
-   private final YoDouble yawWeight = new YoDouble("yawWeight", registry);
-   private final YoDouble costPerStep = new YoDouble("costPerStep", registry);
    private final YoDouble bodyGroundClearance = new YoDouble("bodyGroundClearance", registry);
    private final YoBoolean returnBestEffortPlan = new YoBoolean("returnBestEffortPlan", registry);
    private final YoInteger minimumStepForBestEffortPlan = new YoInteger("minimumStepForBestEffortPlan", registry);
    private final YoDouble minXClearanceFromStance = new YoDouble("minXClearanceFromStance", registry);
    private final YoDouble minYClearanceFromStance = new YoDouble("minYClearanceFromStance", registry);
 
+   private final YoFootstepPlannerCostParameters costParameters;
+
    public YoFootstepPlannerParameters(YoVariableRegistry parentRegistry, FootstepPlannerParameters defaults)
    {
       parentRegistry.addChild(registry);
+
+      costParameters = new YoFootstepPlannerCostParameters(registry, defaults.getCostParameters());
+
       set(defaults);
    }
 
@@ -67,13 +70,13 @@ public class YoFootstepPlannerParameters implements FootstepPlannerParameters
       minimumDistanceFromCliffBottoms.set(defaults.getMinimumDistanceFromCliffBottoms());
       minimumSurfaceInclineRadians.set(defaults.getMinimumSurfaceInclineRadians());
       maximumZPenetrationOnValleyRegions.set(defaults.getMaximumZPenetrationOnValleyRegions());
-      yawWeight.set(defaults.getYawWeight());
-      costPerStep.set(defaults.getCostPerStep());
       bodyGroundClearance.set(defaults.getBodyGroundClearance());
       returnBestEffortPlan.set(defaults.getReturnBestEffortPlan());
       minimumStepForBestEffortPlan.set(defaults.getMinimumStepsForBestEffortPlan());
       minXClearanceFromStance.set(defaults.getMinXClearanceFromStance());
       minYClearanceFromStance.set(defaults.getMinYClearanceFromStance());
+
+      costParameters.set(defaults.getCostParameters());
    }
 
    @Override
@@ -203,18 +206,6 @@ public class YoFootstepPlannerParameters implements FootstepPlannerParameters
    }
 
    @Override
-   public double getYawWeight()
-   {
-      return yawWeight.getDoubleValue();
-   }
-
-   @Override
-   public double getCostPerStep()
-   {
-      return costPerStep.getDoubleValue();
-   }
-
-   @Override
    public double getBodyGroundClearance()
    {
       return bodyGroundClearance.getDoubleValue();
@@ -242,5 +233,11 @@ public class YoFootstepPlannerParameters implements FootstepPlannerParameters
    public double getMinYClearanceFromStance()
    {
       return minYClearanceFromStance.getDoubleValue();
+   }
+
+   @Override
+   public FootstepPlannerCostParameters getCostParameters()
+   {
+      return costParameters;
    }
 }

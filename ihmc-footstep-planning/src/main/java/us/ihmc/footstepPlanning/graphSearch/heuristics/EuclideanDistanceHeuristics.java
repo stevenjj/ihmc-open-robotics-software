@@ -1,6 +1,5 @@
 package us.ihmc.footstepPlanning.graphSearch.heuristics;
 
-import us.ihmc.footstepPlanning.graphSearch.heuristics.CostToGoHeuristics;
 import us.ihmc.footstepPlanning.graphSearch.graph.FootstepNode;
 import us.ihmc.yoVariables.registry.YoVariableRegistry;
 

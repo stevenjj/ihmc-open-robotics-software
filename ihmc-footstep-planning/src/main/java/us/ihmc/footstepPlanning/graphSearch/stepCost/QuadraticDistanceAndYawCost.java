@@ -4,6 +4,7 @@ import us.ihmc.euclid.referenceFrame.FramePoint3D;
 import us.ihmc.euclid.referenceFrame.FramePose3D;
 import us.ihmc.euclid.referenceFrame.ReferenceFrame;
 import us.ihmc.euclid.tuple2D.Point2D;
+import us.ihmc.footstepPlanning.graphSearch.parameters.FootstepPlannerCostParameters;
 import us.ihmc.footstepPlanning.graphSearch.parameters.FootstepPlannerParameters;
 import us.ihmc.footstepPlanning.graphSearch.graph.FootstepNode;
 import us.ihmc.robotics.geometry.AngleTools;
@@ -12,9 +13,8 @@ import us.ihmc.robotics.referenceFrames.PoseReferenceFrame;
 public class QuadraticDistanceAndYawCost implements FootstepCost
 {
    private final FootstepPlannerParameters parameters;
+   private final FootstepPlannerCostParameters costParameters;
 
-   private static final double xCost = 1.0;
-   private static final double yCost = 2.0;
    private static final double yawCostScaler = 10.0;
 
    private final FramePoint3D endNodePosition = new FramePoint3D();
@@ -24,6 +24,7 @@ public class QuadraticDistanceAndYawCost implements FootstepCost
    public QuadraticDistanceAndYawCost(FootstepPlannerParameters parameters)
    {
       this.parameters = parameters;
+      costParameters = parameters.getCostParameters();
    }
 
    @Override
@@ -40,12 +41,12 @@ public class QuadraticDistanceAndYawCost implements FootstepCost
       endNodePosition.changeFrame(startNodeFrame);
 
       double euclideanDistance = startPoint.distance(endPoint);
-      double cost = xCost * Math.pow(endNodePosition.getX(), 2.0);
-      cost += yCost * Math.pow(endNodePosition.getY(), 2.0);
+      double cost = costParameters.getForwardWeight() * Math.pow(endNodePosition.getX(), 2.0);
+      cost += costParameters.getLateralWeight() * Math.pow(endNodePosition.getY(), 2.0);
 
       double yaw = AngleTools.computeAngleDifferenceMinusPiToPi(startNode.getYaw(), endNode.getYaw());
 
-      cost += yawCostScaler * euclideanDistance * parameters.getYawWeight() * Math.abs(yaw);
+      cost += yawCostScaler * euclideanDistance * costParameters.getYawWeight() * Math.abs(yaw);
 
       return cost;
    }
