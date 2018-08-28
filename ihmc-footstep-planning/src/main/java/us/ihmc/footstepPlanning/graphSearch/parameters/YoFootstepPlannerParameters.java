@@ -31,6 +31,10 @@ public class YoFootstepPlannerParameters implements FootstepPlannerParameters
    private final YoDouble minimumSurfaceInclineRadians = new YoDouble("minimumSurfaceInclineRadians", registry);
    private final YoDouble maximumZPenetrationOnValleyRegions = new YoDouble("maximumZPenetrationOnValleyRegions", registry);
    private final YoDouble bodyGroundClearance = new YoDouble("bodyGroundClearance", registry);
+   private final YoDouble bodyBoxHeight = new YoDouble("bodyBoxHeight", registry);
+   private final YoDouble bodyBoxWidth = new YoDouble("bodyBoxWidth", registry);
+   private final YoDouble bodyBoxDepth = new YoDouble("bodyBoxDepth", registry);
+   private final YoDouble bodyBoxCenterHeight = new YoDouble("bodyBoxCenterHeight", registry);
    private final YoBoolean returnBestEffortPlan = new YoBoolean("returnBestEffortPlan", registry);
    private final YoInteger minimumStepForBestEffortPlan = new YoInteger("minimumStepForBestEffortPlan", registry);
    private final YoDouble minXClearanceFromStance = new YoDouble("minXClearanceFromStance", registry);
@@ -71,6 +75,10 @@ public class YoFootstepPlannerParameters implements FootstepPlannerParameters
       minimumSurfaceInclineRadians.set(defaults.getMinimumSurfaceInclineRadians());
       maximumZPenetrationOnValleyRegions.set(defaults.getMaximumZPenetrationOnValleyRegions());
       bodyGroundClearance.set(defaults.getBodyGroundClearance());
+      bodyBoxDepth.set(defaults.getBodyBoxDepth());
+      bodyBoxHeight.set(defaults.getBodyBoxHeight());
+      bodyBoxWidth.set(defaults.getBodyBoxWidth());
+      bodyBoxCenterHeight.set(defaults.getBodyBoxCenterHeight());
       returnBestEffortPlan.set(defaults.getReturnBestEffortPlan());
       minimumStepForBestEffortPlan.set(defaults.getMinimumStepsForBestEffortPlan());
       minXClearanceFromStance.set(defaults.getMinXClearanceFromStance());
@@ -209,6 +217,30 @@ public class YoFootstepPlannerParameters implements FootstepPlannerParameters
    public double getBodyGroundClearance()
    {
       return bodyGroundClearance.getDoubleValue();
+   }
+
+   @Override
+   public double getBodyBoxHeight()
+   {
+      return bodyBoxHeight.getDoubleValue();
+   }
+
+   @Override
+   public double getBodyBoxDepth()
+   {
+      return bodyBoxDepth.getDoubleValue();
+   }
+
+   @Override
+   public double getBodyBoxWidth()
+   {
+      return bodyBoxWidth.getDoubleValue();
+   }
+
+   @Override
+   public double getBodyBoxCenterHeight()
+   {
+      return bodyBoxCenterHeight.getDoubleValue();
    }
 
    @Override
