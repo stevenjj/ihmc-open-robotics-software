@@ -1,6 +1,7 @@
 package us.ihmc.footstepPlanning.graphSearch.parameters;
 
 import us.ihmc.yoVariables.registry.YoVariableRegistry;
+import us.ihmc.yoVariables.variable.YoBoolean;
 import us.ihmc.yoVariables.variable.YoDouble;
 
 public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParameters
@@ -13,6 +14,8 @@ public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParam
    private final YoDouble rollWeight;
    private final YoDouble pitchWeight;
    private final YoDouble costPerStep;
+   
+   private final YoBoolean useQuadraticDistanceCost;
 
    public YoFootstepPlannerCostParameters(YoVariableRegistry registry, FootstepPlannerCostParameters defaults)
    {
@@ -24,6 +27,8 @@ public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParam
       rollWeight = new YoDouble("rollWeight", registry);
       pitchWeight = new YoDouble("pitchWeight", registry);
       costPerStep = new YoDouble("costPerStep", registry);
+      
+      useQuadraticDistanceCost = new YoBoolean("useQuadraticDistanceCost", registry);
 
       set(defaults);
    }
@@ -38,6 +43,8 @@ public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParam
       rollWeight.set(defaults.getRollWeight());
       pitchWeight.set(defaults.getPitchWeight());
       costPerStep.set(defaults.getCostPerStep());
+      
+      useQuadraticDistanceCost.set(defaults.useQuadraticDistanceCost());;
    }
 
    @Override
@@ -86,5 +93,11 @@ public class YoFootstepPlannerCostParameters implements FootstepPlannerCostParam
    public double getPitchWeight()
    {
       return pitchWeight.getDoubleValue();
+   }
+   
+   @Override
+   public boolean useQuadraticDistanceCost()
+   {
+      return useQuadraticDistanceCost.getBooleanValue();
    }
 }

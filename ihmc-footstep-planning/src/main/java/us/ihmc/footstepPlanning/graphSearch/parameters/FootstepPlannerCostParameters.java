@@ -40,6 +40,11 @@ public interface FootstepPlannerCostParameters
    {
       return 1.0;
    }
+   
+   default boolean useQuadraticDistanceCost()
+   {
+      return false;
+   }
 
    /**
     * When using a cost based planning approach this value defines how the height change when stepping
