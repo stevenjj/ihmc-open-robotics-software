@@ -4,6 +4,35 @@ import us.ihmc.footstepPlanning.graphSearch.parameters.FootstepPlannerParameters
 
 public class ValkyrieFootstepPlannerParameters implements FootstepPlannerParameters
 {
+   @Override
+   public boolean checkForBodyBoxCollisions()
+   {
+      return true;
+   }
+
+   @Override
+   public double getBodyBoxDepth()
+   {
+      return 0.35;
+   }
+
+   @Override
+   public double getBodyBoxWidth()
+   {
+      return 0.6;
+   }
+
+   @Override
+   public double getBodyBoxCenterHeight()
+   {
+      return 0.6;
+   }
+
+   @Override
+   public double getBodyBoxHeight()
+   {
+      return 1.0;
+   }
 
    @Override
    public double getIdealFootstepWidth()
