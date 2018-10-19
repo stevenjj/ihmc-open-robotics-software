@@ -117,7 +117,7 @@ public class ValkyrieFootstepPlannerEndToEndTest extends AvatarBipedalFootstepPl
          shapeFactory.addShape(leftThigh, tempTransform, new CylinderShapeDescription<>(thighRadius, thighLength), false, 0b01, 0b10);
 
          tempTransform.setTranslation(thighXOffset, - thighYOffset, thighZOffset + 0.5 * thighLength);
-         shapeFactory.addShape(rightThigh, new RigidBodyTransform(), new CylinderShapeDescription<>(thighRadius, thighLength), false, 0b01, 0b00);
+         shapeFactory.addShape(rightThigh, tempTransform, new CylinderShapeDescription<>(thighRadius, thighLength), false, 0b01, 0b00);
 
          shapeFactory.addShape(shapeFactory.createBox(0.5 * bollardEnvironment.getBollardWidth(), 0.5 * bollardEnvironment.getBollardWidth(), bollardEnvironment.getBollardHeight()));
          shapeFactory.addShape(shapeFactory.createBox(0.5 * bollardEnvironment.getBollardWidth(), 0.5 * bollardEnvironment.getBollardWidth(), bollardEnvironment.getBollardHeight()));
