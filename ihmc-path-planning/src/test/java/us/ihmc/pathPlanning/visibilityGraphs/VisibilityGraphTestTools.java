@@ -1,4 +1,4 @@
-package us.ihmc.footstepPlanning;
+package us.ihmc.pathPlanning.visibilityGraphs;
 
 import us.ihmc.euclid.referenceFrame.FramePoint3D;
 import us.ihmc.euclid.referenceFrame.ReferenceFrame;
@@ -70,6 +70,7 @@ public class VisibilityGraphTestTools
    {
       assertEquals(mapExpected.getConnections().size(), mapActual.getConnections().size());
       assertEquals(mapExpected.getVertices().size(), mapActual.getVertices().size());
+
       for (int i = 0; i < mapExpected.getConnections().size(); i++)
          assertConnectionsEqual(mapExpected.getConnections().get(i), mapActual.getConnections().get(i), epsilon);
       for (int i = 0; i < mapExpected.getVertices().size(); i++)
@@ -189,8 +190,8 @@ public class VisibilityGraphTestTools
       for (int i = 0; i < expected.getAllClusters().size(); i++)
          assertClustersEqual(expected.getAllClusters().get(i), actual.getAllClusters().get(i), epsilon);
 
-      assertVisibilityMapsEqual(expected.getVisibilityMapInWorld(), actual.getVisibilityMapInWorld(), epsilon);
       assertVisibilityMapsEqual(expected.getVisibilityMapInLocal(), actual.getVisibilityMapInLocal(), epsilon);
+      assertVisibilityMapsEqual(expected.getVisibilityMapInWorld(), actual.getVisibilityMapInWorld(), epsilon);
    }
 
 }
