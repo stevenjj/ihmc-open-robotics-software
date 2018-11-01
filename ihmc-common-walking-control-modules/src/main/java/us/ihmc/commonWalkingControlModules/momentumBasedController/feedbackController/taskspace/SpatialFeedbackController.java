@@ -45,6 +45,7 @@ import us.ihmc.yoVariables.variable.YoDouble;
 import us.ihmc.yoVariables.variable.YoFramePose3D;
 import us.ihmc.yoVariables.variable.YoFrameQuaternion;
 import us.ihmc.yoVariables.variable.YoFrameVector3D;
+import us.ihmc.yoVariables.variable.YoFrameYawPitchRoll;
 
 public class SpatialFeedbackController implements FeedbackControllerInterface
 {
@@ -56,6 +57,7 @@ public class SpatialFeedbackController implements FeedbackControllerInterface
 
    private final YoFramePose3D yoDesiredPose;
    private final YoFramePose3D yoCurrentPose;
+   private final YoFrameYawPitchRoll yoCurrentYawPitchRoll;
 
    private final YoSpatialVector yoErrorVector;
    private final YoFrameQuaternion yoErrorOrientation;
@@ -179,6 +181,7 @@ public class SpatialFeedbackController implements FeedbackControllerInterface
 
       yoDesiredPose = feedbackControllerToolbox.getPose(endEffector, DESIRED, isEnabled);
       yoCurrentPose = feedbackControllerToolbox.getPose(endEffector, CURRENT, isEnabled);
+      yoCurrentYawPitchRoll = new YoFrameYawPitchRoll(endEffectorName + "CurrentOrientation", worldFrame, registry);
       YoFrameVector3D errorPosition = feedbackControllerToolbox.getDataVector(endEffector, ERROR, POSITION, isEnabled);
       YoFrameVector3D errorRotationVector = feedbackControllerToolbox.getDataVector(endEffector, ERROR, ROTATION_VECTOR, isEnabled);
       yoErrorVector = new YoSpatialVector(errorPosition, errorRotationVector);
@@ -502,6 +505,7 @@ public class SpatialFeedbackController implements FeedbackControllerInterface
       currentPose.changeFrame(worldFrame);
       yoCurrentPose.set(currentPose);
       yoCurrentPose.getOrientation().getRotationVector(yoCurrentRotationVector);
+      yoCurrentYawPitchRoll.set(yoCurrentPose.getOrientation());
 
       desiredPose.setIncludingFrame(yoDesiredPose);
       desiredPose.changeFrame(controlFrame);
